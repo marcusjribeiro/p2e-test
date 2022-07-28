@@ -1,47 +1,20 @@
+import { IChartData } from "interfaces/crab-chart";
 import React from "react";
 import { AxisOptions, Chart } from "react-charts";
-import { months } from "utils/constants";
-// const data = [
-//   {
-//     label: "Series 1",
-//     data: [
-//       {
-//         date: new Date("2022-02-03T00:00:00.000Z"),
-//         likes: 130,
-//       },
-//       {
-//         date: new Date("2022-03-03T00:00:00.000Z"),
-//         likes: 150,
-//       },
-//     ],
-//   },
-//   {
-//     label: "Series 2",
-//     data: [
-//       {
-//         date: new Date("2022-02-03T00:00:00.000Z"),
-//         likes: 200,
-//       },
-//       {
-//         date: new Date("2022-03-03T00:00:00.000Z"),
-//         likes: 250,
-//       },
-//     ],
-//   },
-// ];
 
-export const CrabChart = ({ data }: any) => {
+export const CrabChart = ({ data }: { data: IChartData }) => {
   const primaryAxis = React.useMemo(
-    (): AxisOptions<{ date: Date }> => ({
-      getValue: (datum) => months[datum.date.getUTCMonth()],
+    (): AxisOptions<{ date: string; price: string }> => ({
+      getValue: (datum) => new Date(datum.date),
     }),
     []
   );
 
   const secondaryAxes = React.useMemo(
-    (): AxisOptions<{ likes: number }>[] => [
+    (): AxisOptions<{ date: string; price: string }>[] => [
       {
-        getValue: (datum) => datum.likes,
+        getValue: (datum) => datum.price,
+
         elementType: "line",
         position: "right",
       },
@@ -49,17 +22,18 @@ export const CrabChart = ({ data }: any) => {
     []
   );
 
-  console.log(data);
+  if (data.length <= 0) return <div>Loading...</div>;
+
   return (
-    <div className="w-full h-64">
-      {/* <Chart
+    <div className="w-full h-64 sm:w-11/12">
+      <Chart
         options={{
           data,
           primaryAxis,
           secondaryAxes,
           dark: true,
         }}
-      /> */}
+      />
     </div>
   );
 };

@@ -26,7 +26,7 @@ export const Dropdown = () => {
     },
   };
   return (
-    <motion.div
+    <motion.button
       className="flex flex-grow w-5/6 justify-between items-center bg-dropdown rounded border-solid border-[1px] border-bfilters m-[-1rem] z-20 px-4 py-4"
       onClick={() => setShown((state) => !state)}
     >
@@ -42,12 +42,12 @@ export const Dropdown = () => {
           <motion.li
             onClick={() => setOption(item)}
             key={item}
-            className="cursor-pointer p-1 text-white"
+            className="cursor-pointer p-1 text-white text-left"
           >
             {item}
           </motion.li>
         ))}
       </motion.ul>
-    </motion.div>
+    </motion.button>
   );
 };

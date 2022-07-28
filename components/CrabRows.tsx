@@ -1,75 +1,48 @@
-import useCrabs from "hooks/useCrabSales";
-import { ICrabSalesReturn } from "interfaces/crabSales-service";
-import { useEffect, useMemo } from "react";
+import useCrabs from "hooks/useCrabs";
+import Image from "next/image";
+import { thousandSeparator } from "utils/util";
 
 export const CrabRows = () => {
-  const { useCrabSales } = useCrabs();
-
-  const { data: surgeData } = useCrabSales({
-    from: "2022-07-01T00:00:00.000000Z",
-    breedCount: [0, 3],
-    legend: [0, 6],
-    purity: [0, 6],
-    crabClass: ["SURGE"],
-  });
-  const { data: sunkenData } = useCrabSales({
-    from: "2022-07-01T00:00:00.000000Z",
-    breedCount: [0, 3],
-    legend: [0, 6],
-    purity: [0, 6],
-    crabClass: ["SUNKEN"],
-  });
-
-  // todo: create reducer
-  const crabs = {
-    SURGE: { value: "", percentage: "", bg: "", icon: "" },
-    SUNKEN: { value: "", percentage: "", bg: "", icon: "" },
-    PRIME: { value: "", percentage: "", bg: "", icon: "" },
-    BULK: { value: "", percentage: "", bg: "", icon: "" },
-    CRABOID: { value: "", percentage: "", bg: "", icon: "" },
-    RUINED: { value: "", percentage: "", bg: "", icon: "" },
-    GEM: { value: "", percentage: "", bg: "", icon: "" },
-    ORGANIC: { value: "", percentage: "", bg: "", icon: "" },
-  };
-
-  useEffect(() => {
-    let crabRows: ICrabSalesReturn[] = [];
-    if (surgeData) crabRows = [...crabRows, ...surgeData];
-    if (sunkenData) crabRows = [...crabRows, ...sunkenData];
-  }, [surgeData, sunkenData]);
+  const { useCrabRows } = useCrabs();
+  const { crabRows } = useCrabRows();
 
   return (
-    <div className="bg-filters w-11/12 flex flex-col sm:flex-row p-4 mt-6 gap-4 mb-24">
-      <span className="font-normal text-xs text-white">
+    <div className="bg-filters sm:bg-transparent w-11/12 sm:w-4/5 flex flex-col p-4 mt-6 gap-4 mb-24 sm:px-7 sm:flex-auto sm:h-screen">
+      <span className="font-normal text-xs text-white sm:hidden">
         POPULATION BREAKDOWN
       </span>
-      {[
-        {
-          icon: "",
-          value: "34.020",
-          name: "yellow",
-          percentage: "29%",
-          bg: "bg-[#40380F]",
-        },
-        {
-          icon: "",
-          value: "24.571",
-          name: "brown",
-          percentage: "21%",
-          bg: "bg-[#401913]",
-        },
-      ].map((item) => (
-        <div
-          key={`${item.value + item.percentage}`}
-          className={`flex border-bbutton ${item.bg} p-2 rounded items-center`}
-        >
-          {/* <Image src={item.icon} alt={`${item.name} icon`} /> */}
-          <span className="mr-2 text-2xl font-medium">{item.value}</span>
-          <span className="mr-2 text-lg font-light text-mobile-gray">
-            {item.percentage}
-          </span>
-        </div>
-      ))}
+      <div className="gap-4 flex flex-col">
+        {crabRows.map((item) => (
+          <div
+            key={`${item.value + item.percentage}`}
+            className={`flex border-bbutton bg-${item.name} p-2 rounded items-center`}
+          >
+            <Image src={item.icon} alt={`${item.name} icon`} />
+            <span className="pl-2 mr-2 text-2xl font-medium">
+              {thousandSeparator(item.value)}
+            </span>
+            <span
+              className={`mr-2 text-lg font-light ${
+                item.percentage.startsWith("-")
+                  ? "text-red-500"
+                  : "text-green-500"
+              }`}
+            >
+              {item.percentage.startsWith("-")
+                ? item.percentage
+                : `+${item.percentage}`}
+            </span>
+            {/* bg-surge */}
+            {/* bg-sunken */}
+            {/* bg-prime */}
+            {/* bg-bulk */}
+            {/* bg-craboid */}
+            {/* bg-ruined */}
+            {/* bg-gem */}
+            {/* bg-organic */}
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

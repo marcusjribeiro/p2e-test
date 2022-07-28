@@ -7,6 +7,7 @@ import {
   QueryClientProvider,
 } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import Head from "next/head";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [queryClient] = React.useState(
@@ -15,18 +16,26 @@ function MyApp({ Component, pageProps }: AppProps) {
         defaultOptions: {
           queries: {
             staleTime: 5000,
+            refetchOnWindowFocus: false,
           },
         },
       })
   );
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <Hydrate state={pageProps.dehydratedState}>
-        <Component {...pageProps} />
-      </Hydrate>
-      <ReactQueryDevtools />
-    </QueryClientProvider>
+    <>
+      <Head>
+        <title>Crabada</title>
+        <meta name="description" content="Crabada analytics" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <QueryClientProvider client={queryClient}>
+        <Hydrate state={pageProps.dehydratedState}>
+          <Component {...pageProps} />
+        </Hydrate>
+        <ReactQueryDevtools />
+      </QueryClientProvider>
+    </>
   );
 }
 

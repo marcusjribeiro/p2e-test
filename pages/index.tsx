@@ -1,13 +1,7 @@
 import { dehydrate, QueryClient } from "@tanstack/react-query";
-import { CrabChart, CrabRows, Dropdown, Header, Layout } from "components";
-import useCrabs from "hooks/useCrabSales";
-import Icons from "icons";
-import Images from "images";
+import { ChartContent, Layout, Navigator } from "components";
 import type { GetServerSideProps, NextPage } from "next";
 import Head from "next/head";
-import Image from "next/image";
-import React, { useEffect, useState } from "react";
-import { AxisOptions, Chart } from "react-charts";
 import { getCrabSales } from "services/crabSales-service";
 
 const fullFetch = {
@@ -30,7 +24,7 @@ const fullFetch = {
 export const getServerSideProps: GetServerSideProps = async () => {
   const queryClient = new QueryClient();
 
-  await queryClient.prefetchQuery(["posts", fullFetch], () =>
+  await queryClient.prefetchQuery(["crab-sales", fullFetch], () =>
     getCrabSales(fullFetch)
   );
 
@@ -43,38 +37,11 @@ export const getServerSideProps: GetServerSideProps = async () => {
 
 const Home: NextPage = () => {
   return (
-    <div className="py-0 sm:px-8">
-      <Head>
-        <title>Crabada</title>
-        <meta name="description" content="Crabada analytics" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+    <div className="py-0 sm:px-8 bg-almost-black">
       <Layout>
-        <Header />
-        <div className="flex flex-col flex-auto items-center w-11/12 pt-7 mb-6 bg-gradient-to-b from-chart-initial to-chart-end mx-3">
-          <div className="flex mb-4">
-            <h2 className="mr-1">Cabrada Count</h2>
-            <h1 className="mr-1 text-hold-gray">{`(today's low)`}</h1>
-            <Image
-              src={Icons.circleInformation}
-              alt="Circle information icon"
-              className="fill-hold-gray"
-            />
-          </div>
-          <div className="flex mb-6">
-            <h2 className="mr-1">256,002</h2>
-            <h1 className="mr-1 text-hold-gray">{`($1,543)`}</h1>
-          </div>
-
-          <CrabChart />
-
-          <CrabRows />
-
-          <div className="h-px w-full bg-separator mb-12" />
-          <button className="bg-button py-2 px-4 mb-16 rounded-3xl">
-            Submit Feedback
-          </button>
-        </div>
+        <Navigator />
+        {/* <div className="hidden sm:flex">Crabada</div> */}
+        <ChartContent />
       </Layout>
       <footer className="flex flex-col justify-center items-center py-6 px-6">
         <div className="flex">
