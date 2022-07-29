@@ -30,7 +30,9 @@ const navButton = (item: string, isSocial?: boolean) => (
     className={`flex flex-auto cursor-pointer ${isSocial ? "p-1" : "p-4"} `}
   >
     <Link href={isSocial ? getSocialLink(item) : "/"}>
-      <Image src={getNavIcons(item)} alt={`${item} logo`} />
+      <a target={"_blank"}>
+        <Image src={getNavIcons(item)} alt={`${item} logo`} />
+      </a>
     </Link>
   </div>
 );
