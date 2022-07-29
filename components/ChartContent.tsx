@@ -37,7 +37,11 @@ export const ChartContent = () => {
             )})`}</h1>
           </div>
         </div>
-        <CrabChart data={chartData} />
+        {chartData.length <= 0 ? (
+          <div className="pl-4">NO DATA</div>
+        ) : (
+          <CrabChart data={chartData} />
+        )}
       </div>
       <CrabRows isLoading={isLoading} />
 

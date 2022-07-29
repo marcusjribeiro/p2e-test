@@ -337,49 +337,49 @@ const useCrabs = () => {
     const chartData = useMemo(() => {
       let mountingData: IChartData = [];
 
-      if (surgeData)
+      if (surgeData && surgeData.length > 0)
         mountingData = mountChartData(
           mountingData,
           sortCrabsData(surgeData),
           "Surge"
         );
-      if (sunkenData)
+      if (sunkenData && sunkenData.length > 0)
         mountingData = mountChartData(
           mountingData,
           sortCrabsData(sunkenData),
           "Sunken"
         );
-      if (primeData)
+      if (primeData && primeData.length > 0)
         mountingData = mountChartData(
           mountingData,
           sortCrabsData(primeData),
           "Prime"
         );
-      if (bulkData)
+      if (bulkData && bulkData.length > 0)
         mountingData = mountChartData(
           mountingData,
           sortCrabsData(bulkData),
           "Bulk"
         );
-      if (craboidData)
+      if (craboidData && craboidData.length > 0)
         mountingData = mountChartData(
           mountingData,
           sortCrabsData(craboidData),
           "Craboid"
         );
-      if (ruinedData)
+      if (ruinedData && ruinedData.length > 0)
         mountingData = mountChartData(
           mountingData,
           sortCrabsData(ruinedData),
           "Ruined"
         );
-      if (gemData)
+      if (gemData && gemData.length > 0)
         mountingData = mountChartData(
           mountingData,
           sortCrabsData(gemData),
           "Gem"
         );
-      if (organicData)
+      if (organicData && organicData.length > 0)
         mountingData = mountChartData(
           mountingData,
           sortCrabsData(organicData),
