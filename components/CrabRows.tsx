@@ -29,13 +29,13 @@ export const CrabRows = ({ isLoading }: { isLoading?: boolean }) => {
               className={`mr-2 text-lg sm:text-xs font-light ${
                 item.percentage.startsWith("-")
                   ? "text-red-500"
-                  : item.percentage.startsWith("0")
+                  : item.percentage.startsWith("0%")
                   ? "text-mobile-gray"
                   : "text-green-500"
               }`}
             >
               {item.percentage.startsWith("-") ||
-              item.percentage.startsWith("0")
+              item.percentage.startsWith("0%")
                 ? item.percentage
                 : `+${item.percentage}`}
             </span>

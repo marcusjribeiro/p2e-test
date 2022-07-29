@@ -7,34 +7,51 @@ import {
   Layout,
   Navigator,
 } from "components";
-import Icons from "icons";
-import Images from "images";
 import type { GetServerSideProps, NextPage } from "next";
-import Image from "next/image";
 import { getCrabSales } from "services/crabSales-service";
-
-const fullFetch = {
-  from: "2022-07-01T00:00:00.000000Z",
-  breedCount: [0, 3],
-  legend: [0, 6],
-  purity: [0, 6],
-  crabClass: [
-    "SURGE",
-    "SUNKEN",
-    "PRIME",
-    "BULK",
-    "CRABOID",
-    "RUINED",
-    "GEM",
-    "ORGANIC",
-  ],
-};
+import { prefetchReqs } from "utils/constants";
 
 export const getServerSideProps: GetServerSideProps = async () => {
   const queryClient = new QueryClient();
 
-  await queryClient.prefetchQuery(["crab-sales", fullFetch], () =>
-    getCrabSales(fullFetch)
+  await queryClient.prefetchQuery(["crab-sales", prefetchReqs.fullFetch], () =>
+    getCrabSales(prefetchReqs.fullFetch)
+  );
+
+  await queryClient.prefetchQuery(["crab-sales", prefetchReqs.yesterday], () =>
+    getCrabSales(prefetchReqs.yesterday)
+  );
+
+  await queryClient.prefetchQuery(["crab-sales", prefetchReqs.SURGE], () =>
+    getCrabSales(prefetchReqs.SURGE)
+  );
+
+  await queryClient.prefetchQuery(["crab-sales", prefetchReqs.SUNKEN], () =>
+    getCrabSales(prefetchReqs.SUNKEN)
+  );
+
+  await queryClient.prefetchQuery(["crab-sales", prefetchReqs.BULK], () =>
+    getCrabSales(prefetchReqs.BULK)
+  );
+
+  await queryClient.prefetchQuery(["crab-sales", prefetchReqs.CRABOID], () =>
+    getCrabSales(prefetchReqs.CRABOID)
+  );
+
+  await queryClient.prefetchQuery(["crab-sales", prefetchReqs.GEM], () =>
+    getCrabSales(prefetchReqs.GEM)
+  );
+
+  await queryClient.prefetchQuery(["crab-sales", prefetchReqs.ORGANIC], () =>
+    getCrabSales(prefetchReqs.ORGANIC)
+  );
+
+  await queryClient.prefetchQuery(["crab-sales", prefetchReqs.PRIME], () =>
+    getCrabSales(prefetchReqs.PRIME)
+  );
+
+  await queryClient.prefetchQuery(["crab-sales", prefetchReqs.RUINED], () =>
+    getCrabSales(prefetchReqs.RUINED)
   );
 
   return {

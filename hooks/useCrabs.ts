@@ -11,6 +11,7 @@ import { getCrabPercentage, mountChartData, sortCrabsData } from "utils/util";
 const useCrabs = () => {
   const useCrabSales = (props: ICrabSalesPost) =>
     useQuery(["crab-sales", props], () => getCrabSales(props));
+
   const { crabsState } = useCrabsContext();
 
   const useSingleCrabsData = () => {
@@ -283,15 +284,15 @@ const useCrabs = () => {
       ],
     });
 
-    const lastDay = useMemo(() => {
+    const yesterday = useMemo(() => {
       let date = new Date();
       date.setDate(date.getDate() - 1);
       date.setHours(0, 0, 0, 0);
       return new Date(date).toISOString();
     }, []);
 
-    const { data: lastDayData } = useCrabSales({
-      from: lastDay,
+    const { data: yesterdayData } = useCrabSales({
+      from: yesterday,
       breedCount: crabsState.breedCount,
       legend: crabsState.legend,
       purity: crabsState.purity,
@@ -321,8 +322,8 @@ const useCrabs = () => {
 
     const todaysLow = useMemo(
       () =>
-        lastDayData
-          ? sortCrabsData(lastDayData)
+        yesterdayData
+          ? sortCrabsData(yesterdayData)
               .reduce(
                 (acc, cur, curIdx) =>
                   curIdx !== 0 && acc <= cur.lowerPrice ? acc : cur.lowerPrice,
@@ -330,7 +331,7 @@ const useCrabs = () => {
               )
               .toString()
           : "",
-      [lastDayData]
+      [yesterdayData]
     );
 
     const chartData = useMemo(() => {
