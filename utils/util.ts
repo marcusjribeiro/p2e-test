@@ -1,11 +1,13 @@
 import { IChartData } from "interfaces/crab-chart";
 import { ICrabSalesReturn } from "interfaces/crabSales-service";
 
-export const getCrabPercentage = (crabs: ICrabSalesReturn[]) =>
-  `${(
-    ((crabs[0].totalSales - crabs[1].totalSales) / crabs[1].totalSales) *
+export const getCrabPercentage = (crabs: ICrabSalesReturn[]) => {
+  if (crabs.length <= 1 || !crabs[0] || !crabs[0].avgPrice) return "0%";
+  return `${(
+    ((crabs[0].avgPrice - crabs[1].avgPrice) / crabs[1].avgPrice) *
     100
   ).toFixed(2)}%`;
+};
 
 export const sortCrabsData = (crabs: ICrabSalesReturn[]) =>
   crabs?.sort(function (a, b) {
@@ -20,11 +22,13 @@ export const usdFormatter = (x: string) => `$${thousandSeparator(x)}`;
 
 export const mountChartData = (
   mountingData: IChartData,
-  data: ICrabSalesReturn[]
+  data: ICrabSalesReturn[],
+  name: string
 ) => {
   return [
     ...mountingData,
     {
+      label: name,
       data: sortCrabsData(data).map((item) => ({
         date: new Date(item.bucketDate).toISOString(),
         price: item.avgPrice.toFixed().toString(),

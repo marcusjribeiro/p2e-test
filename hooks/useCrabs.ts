@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { useCrabsContext } from "contexts/crabs.context";
 import Images from "images";
 import { IChartData } from "interfaces/crab-chart";
 import { ICrabRow } from "interfaces/crab-rows";
@@ -10,64 +11,75 @@ import { getCrabPercentage, mountChartData, sortCrabsData } from "utils/util";
 const useCrabs = () => {
   const useCrabSales = (props: ICrabSalesPost) =>
     useQuery(["crab-sales", props], () => getCrabSales(props));
+  const { crabsState } = useCrabsContext();
 
   const useSingleCrabsData = () => {
-    const { data: surgeData } = useCrabSales({
+    const { data: surgeData, isLoading: surgeIsLoading } = useCrabSales({
       from: "2022-07-01T00:00:00.000000Z",
-      breedCount: [0, 3],
-      legend: [0, 6],
-      purity: [0, 6],
+      breedCount: crabsState.breedCount,
+      legend: crabsState.legend,
+      purity: crabsState.purity,
       crabClass: ["SURGE"],
     });
-    const { data: sunkenData } = useCrabSales({
+    const { data: sunkenData, isLoading: sunkenIsLoading } = useCrabSales({
       from: "2022-07-01T00:00:00.000000Z",
-      breedCount: [0, 3],
-      legend: [0, 6],
-      purity: [0, 6],
+      breedCount: crabsState.breedCount,
+      legend: crabsState.legend,
+      purity: crabsState.purity,
       crabClass: ["SUNKEN"],
     });
-    const { data: primeData } = useCrabSales({
+    const { data: primeData, isLoading: primeIsLoading } = useCrabSales({
       from: "2022-07-01T00:00:00.000000Z",
-      breedCount: [0, 3],
-      legend: [0, 6],
-      purity: [0, 6],
+      breedCount: crabsState.breedCount,
+      legend: crabsState.legend,
+      purity: crabsState.purity,
       crabClass: ["PRIME"],
     });
-    const { data: bulkData } = useCrabSales({
+    const { data: bulkData, isLoading: bulkIsLoading } = useCrabSales({
       from: "2022-07-01T00:00:00.000000Z",
-      breedCount: [0, 3],
-      legend: [0, 6],
-      purity: [0, 6],
+      breedCount: crabsState.breedCount,
+      legend: crabsState.legend,
+      purity: crabsState.purity,
       crabClass: ["BULK"],
     });
-    const { data: craboidData } = useCrabSales({
+    const { data: craboidData, isLoading: craboidIsLoading } = useCrabSales({
       from: "2022-07-01T00:00:00.000000Z",
-      breedCount: [0, 3],
-      legend: [0, 6],
-      purity: [0, 6],
+      breedCount: crabsState.breedCount,
+      legend: crabsState.legend,
+      purity: crabsState.purity,
       crabClass: ["CRABOID"],
     });
-    const { data: ruinedData } = useCrabSales({
+    const { data: ruinedData, isLoading: ruinedIsLoading } = useCrabSales({
       from: "2022-07-01T00:00:00.000000Z",
-      breedCount: [0, 3],
-      legend: [0, 6],
-      purity: [0, 6],
+      breedCount: crabsState.breedCount,
+      legend: crabsState.legend,
+      purity: crabsState.purity,
       crabClass: ["RUINED"],
     });
-    const { data: gemData } = useCrabSales({
+    const { data: gemData, isLoading: gemIsLoading } = useCrabSales({
       from: "2022-07-01T00:00:00.000000Z",
-      breedCount: [0, 3],
-      legend: [0, 6],
-      purity: [0, 6],
+      breedCount: crabsState.breedCount,
+      legend: crabsState.legend,
+      purity: crabsState.purity,
       crabClass: ["GEM"],
     });
-    const { data: organicData } = useCrabSales({
+    const { data: organicData, isLoading: organicIsLoading } = useCrabSales({
       from: "2022-07-01T00:00:00.000000Z",
-      breedCount: [0, 3],
-      legend: [0, 6],
-      purity: [0, 6],
+      breedCount: crabsState.breedCount,
+      legend: crabsState.legend,
+      purity: crabsState.purity,
       crabClass: ["ORGANIC"],
     });
+
+    const isLoading =
+      surgeIsLoading ||
+      sunkenIsLoading ||
+      primeIsLoading ||
+      bulkIsLoading ||
+      craboidIsLoading ||
+      ruinedIsLoading ||
+      gemIsLoading ||
+      organicIsLoading;
 
     return {
       surgeData,
@@ -78,6 +90,7 @@ const useCrabs = () => {
       ruinedData,
       gemData,
       organicData,
+      isLoading,
     };
   };
 
@@ -109,7 +122,10 @@ const useCrabs = () => {
           ...rows,
           {
             icon: Images.surge,
-            value: sortedSurge[0].totalSales.toFixed().toString() || "",
+            value:
+              sortedSurge.length > 0
+                ? sortedSurge[0].avgPrice.toFixed().toString()
+                : "0.0",
             percentage: getCrabPercentage(sortedSurge),
             name: "surge",
             bg: "bg-surge",
@@ -121,7 +137,10 @@ const useCrabs = () => {
           ...rows,
           {
             icon: Images.sunken,
-            value: sortedSunken[0].totalSales.toFixed().toString() || "",
+            value:
+              sortedSunken.length > 0
+                ? sortedSunken[0].avgPrice.toFixed().toString()
+                : "0.0",
             percentage: getCrabPercentage(sortedSunken),
             name: "sunken",
             bg: "bg-sunken",
@@ -133,7 +152,10 @@ const useCrabs = () => {
           ...rows,
           {
             icon: Images.prime,
-            value: sortedPrimeData[0].totalSales.toFixed().toString() || "",
+            value:
+              sortedPrimeData.length > 0
+                ? sortedPrimeData[0].avgPrice.toFixed().toString()
+                : "0.0",
             percentage: getCrabPercentage(sortedPrimeData),
             name: "prime",
             bg: "bg-prime",
@@ -145,7 +167,10 @@ const useCrabs = () => {
           ...rows,
           {
             icon: Images.bulk,
-            value: sortedBulkData[0].totalSales.toFixed().toString() || "",
+            value:
+              sortedBulkData.length > 0
+                ? sortedBulkData[0].avgPrice.toFixed().toString()
+                : "0.0",
             percentage: getCrabPercentage(sortedBulkData),
             name: "bulk",
             bg: "bg-bulk",
@@ -157,7 +182,10 @@ const useCrabs = () => {
           ...rows,
           {
             icon: Images.craboid,
-            value: sortedCraboidData[0].totalSales.toFixed().toString() || "",
+            value:
+              sortedCraboidData.length > 0
+                ? sortedCraboidData[0].avgPrice.toFixed().toString()
+                : "0.0",
             percentage: getCrabPercentage(sortedCraboidData),
             name: "craboid",
             bg: "bg-craboid",
@@ -169,7 +197,10 @@ const useCrabs = () => {
           ...rows,
           {
             icon: Images.ruined,
-            value: sortedRuinedData[0].totalSales.toFixed().toString() || "",
+            value:
+              sortedRuinedData.length > 0
+                ? sortedRuinedData[0].avgPrice.toFixed().toString()
+                : "0.0",
             percentage: getCrabPercentage(sortedRuinedData),
             name: "ruined",
             bg: "bg-ruined",
@@ -181,7 +212,10 @@ const useCrabs = () => {
           ...rows,
           {
             icon: Images.gem,
-            value: sortedGemData[0].totalSales.toFixed().toString() || "",
+            value:
+              sortedGemData.length > 0
+                ? sortedGemData[0].avgPrice.toFixed().toString()
+                : "0.0",
             percentage: getCrabPercentage(sortedGemData),
             name: "gem",
             bg: "bg-gem",
@@ -193,7 +227,10 @@ const useCrabs = () => {
           ...rows,
           {
             icon: Images.organic,
-            value: sortedOrganicData[0].totalSales.toFixed().toString() || "",
+            value:
+              sortedOrganicData.length > 0
+                ? sortedOrganicData[0].avgPrice.toFixed().toString()
+                : "0.0",
             percentage: getCrabPercentage(sortedOrganicData),
             name: "organic",
             bg: "bg-organic",
@@ -226,13 +263,14 @@ const useCrabs = () => {
       ruinedData,
       gemData,
       organicData,
+      isLoading,
     } = useSingleCrabsData();
 
     const { data } = useCrabSales({
       from: "2022-07-01T00:00:00.000000Z",
-      breedCount: [0, 3],
-      legend: [0, 6],
-      purity: [0, 6],
+      breedCount: crabsState.breedCount,
+      legend: crabsState.legend,
+      purity: crabsState.purity,
       crabClass: [
         "SURGE",
         "SUNKEN",
@@ -254,9 +292,9 @@ const useCrabs = () => {
 
     const { data: lastDayData } = useCrabSales({
       from: lastDay,
-      breedCount: [0, 3],
-      legend: [0, 6],
-      purity: [0, 6],
+      breedCount: crabsState.breedCount,
+      legend: crabsState.legend,
+      purity: crabsState.purity,
       crabClass: [
         "SURGE",
         "SUNKEN",
@@ -299,21 +337,53 @@ const useCrabs = () => {
       let mountingData: IChartData = [];
 
       if (surgeData)
-        mountingData = mountChartData(mountingData, sortCrabsData(surgeData));
+        mountingData = mountChartData(
+          mountingData,
+          sortCrabsData(surgeData),
+          "Surge"
+        );
       if (sunkenData)
-        mountingData = mountChartData(mountingData, sortCrabsData(sunkenData));
+        mountingData = mountChartData(
+          mountingData,
+          sortCrabsData(sunkenData),
+          "Sunken"
+        );
       if (primeData)
-        mountingData = mountChartData(mountingData, sortCrabsData(primeData));
+        mountingData = mountChartData(
+          mountingData,
+          sortCrabsData(primeData),
+          "Prime"
+        );
       if (bulkData)
-        mountingData = mountChartData(mountingData, sortCrabsData(bulkData));
+        mountingData = mountChartData(
+          mountingData,
+          sortCrabsData(bulkData),
+          "Bulk"
+        );
       if (craboidData)
-        mountingData = mountChartData(mountingData, sortCrabsData(craboidData));
+        mountingData = mountChartData(
+          mountingData,
+          sortCrabsData(craboidData),
+          "Craboid"
+        );
       if (ruinedData)
-        mountingData = mountChartData(mountingData, sortCrabsData(ruinedData));
+        mountingData = mountChartData(
+          mountingData,
+          sortCrabsData(ruinedData),
+          "Ruined"
+        );
       if (gemData)
-        mountingData = mountChartData(mountingData, sortCrabsData(gemData));
+        mountingData = mountChartData(
+          mountingData,
+          sortCrabsData(gemData),
+          "Gem"
+        );
       if (organicData)
-        mountingData = mountChartData(mountingData, sortCrabsData(organicData));
+        mountingData = mountChartData(
+          mountingData,
+          sortCrabsData(organicData),
+          "Organic"
+        );
 
       return mountingData;
     }, [
@@ -327,7 +397,7 @@ const useCrabs = () => {
       organicData,
     ]);
 
-    return { crabadaCount, todaysLow, chartData };
+    return { crabadaCount, todaysLow, chartData, isLoading };
   };
 
   return { useCrabSales, useCrabRows, useCrabChart };

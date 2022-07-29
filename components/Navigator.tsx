@@ -40,7 +40,7 @@ export const Navigator = () => (
     </div>
     <div className="hidden sm:flex h-screen flex-col items-center bg-black">
       <div className="cursor-pointer p-6">
-        <Link href={{ pathname: "/" }}>
+        <Link href={"/"}>
           <Image src={Images.P2eIcon} alt="P2E Logo" width={50} height={38} />
         </Link>
       </div>

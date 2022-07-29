@@ -12,6 +12,11 @@ import organic from "images/organic.png";
 import twitch from "images/twitch.png";
 import twitter from "images/twitter.png";
 import discord from "images/discord.png";
+import avatar from "images/avatar.png";
+import avax from "images/avax.png";
+import cra from "images/cra.png";
+import cram from "images/cram.png";
+import tus from "images/tus.png";
 
 const Images = {
   CrabadaBanner,
@@ -28,6 +33,11 @@ const Images = {
   twitch,
   twitter,
   discord,
+  avatar,
+  avax,
+  cra,
+  cram,
+  tus,
 };
 
 export default Images;

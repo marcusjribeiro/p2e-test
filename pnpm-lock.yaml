@@ -6,8 +6,10 @@ specifiers:
   '@types/node': 18.6.1
   '@types/react': 18.0.15
   '@types/react-dom': 18.0.6
+  '@types/react-lottie': ^1.2.6
   autoprefixer: ^10.4.7
   axios: ^0.27.2
+  classnames: ^2.3.1
   eslint: 8.20.0
   eslint-config-next: 12.2.3
   framer-motion: ^6.5.1
@@ -17,6 +19,7 @@ specifiers:
   react-charts: 3.0.0-beta.38
   react-dom: 18.2.0
   react-is: ^18.2.0
+  react-lottie: ^1.2.3
   styled-components: ^5.3.5
   tailwindcss: ^3.1.6
   typescript: 4.7.4
@@ -25,18 +28,21 @@ dependencies:
   '@tanstack/react-query': 4.0.10_biqbaboplfbrettd7655fr4n2y
   '@tanstack/react-query-devtools': 4.0.10_react@18.2.0
   axios: 0.27.2
+  classnames: 2.3.1
   framer-motion: 6.5.1_biqbaboplfbrettd7655fr4n2y
   next: 12.2.3_biqbaboplfbrettd7655fr4n2y
   react: 18.2.0
   react-charts: 3.0.0-beta.38_biqbaboplfbrettd7655fr4n2y
   react-dom: 18.2.0_react@18.2.0
   react-is: 18.2.0
+  react-lottie: 1.2.3_react@18.2.0
   styled-components: 5.3.5_7i5myeigehqah43i5u7wbekgba
 
 devDependencies:
   '@types/node': 18.6.1
   '@types/react': 18.0.15
   '@types/react-dom': 18.0.6
+  '@types/react-lottie': 1.2.6
   autoprefixer: 10.4.7_postcss@8.4.14
   eslint: 8.20.0
   eslint-config-next: 12.2.3_he2ccbldppg44uulnyq4rwocfa
@@ -571,6 +577,12 @@ packages:
       '@types/react': 18.0.15
     dev: true
 
+  /@types/react-lottie/1.2.6:
+    resolution: {integrity: sha1-TzUd/fX5OkajqXFPuzGfHg8DDq8=}
+    dependencies:
+      '@types/react': 18.0.15
+    dev: true
+
   /@types/react/17.0.47:
     resolution: {integrity: sha1-Tucar0xanikOA6pNDTE8XWZrO3g=}
     dependencies:
@@ -836,6 +848,13 @@ packages:
     resolution: {integrity: sha1-CvMqmm4Tyno/1QaeYtew9Y0NiUY=}
     dev: false
 
+  /babel-runtime/6.26.0:
+    resolution: {integrity: sha1-llxwWGaOgrVde/4E/yM3vItWR/4=}
+    dependencies:
+      core-js: 2.6.12
+      regenerator-runtime: 0.11.1
+    dev: false
+
   /balanced-match/1.0.2:
     resolution: {integrity: sha1-6D46fj8wCzTLnYf2FfoMvzV2kO4=}
     dev: true
@@ -926,6 +945,10 @@ packages:
       fsevents: 2.3.2
     dev: true
 
+  /classnames/2.3.1:
+    resolution: {integrity: sha1-38+jiR4wbsHa0QXQ6I9EF7hTXo4=}
+    dev: false
+
   /color-convert/1.9.3:
     resolution: {integrity: sha1-u3GFBpDh8TZWfeYp0tVHHe2kweg=}
     dependencies:
@@ -962,6 +985,11 @@ packages:
     resolution: {integrity: sha1-EO65Db8NZwprIrCBrsx96y+ux+E=}
     requiresBuild: true
     dev: true
+
+  /core-js/2.6.12:
+    resolution: {integrity: sha1-2TM9+nsGXjR8xWgiGdb2kIWcwuw=}
+    requiresBuild: true
+    dev: false
 
   /cross-spawn/7.0.3:
     resolution: {integrity: sha1-9zqFudXUHQRVUcF34ogtSshXKKY=}
@@ -2003,6 +2031,10 @@ packages:
     dependencies:
       js-tokens: 4.0.0
 
+  /lottie-web/5.9.6:
+    resolution: {integrity: sha1-Yq5oVjNV0+BKp11T3sPdS+oOV8k=}
+    dev: false
+
   /lru-cache/6.0.0:
     resolution: {integrity: sha1-bW/mVw69lqr5D8rR2vo7JWbbOpQ=}
     engines: {node: '>=10'}
@@ -2412,6 +2444,17 @@ packages:
     resolution: {integrity: sha1-GZQx7qqi4J+GQn77tPFHPttHYJs=}
     dev: false
 
+  /react-lottie/1.2.3_react@18.2.0:
+    resolution: {integrity: sha1-hUS5aTngiGWAcu6l4S2RLNqjrME=}
+    engines: {npm: ^3.0.0}
+    peerDependencies:
+      react: ^0.14.7 || ^15.0.0 || ^16.0.0
+    dependencies:
+      babel-runtime: 6.26.0
+      lottie-web: 5.9.6
+      react: 18.2.0
+    dev: false
+
   /react/18.2.0:
     resolution: {integrity: sha1-VVvZhZKIMlX6AN4U8RUakXtdd9U=}
     engines: {node: '>=0.10.0'}
@@ -2431,6 +2474,10 @@ packages:
     dependencies:
       picomatch: 2.3.1
     dev: true
+
+  /regenerator-runtime/0.11.1:
+    resolution: {integrity: sha1-vgWtf5v30i4Fb5cmzuUBf78Z4uk=}
+    dev: false
 
   /regenerator-runtime/0.13.9:
     resolution: {integrity: sha1-iSV0Kpj/2QgUmI11Zq0wyjsmO1I=}

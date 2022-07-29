@@ -1,6 +1,7 @@
 import { IChartData } from "interfaces/crab-chart";
 import React from "react";
 import { AxisOptions, Chart } from "react-charts";
+import { Loading } from "components/Loading";
 
 export const CrabChart = ({ data }: { data: IChartData }) => {
   const primaryAxis = React.useMemo(
@@ -13,19 +14,17 @@ export const CrabChart = ({ data }: { data: IChartData }) => {
   const secondaryAxes = React.useMemo(
     (): AxisOptions<{ date: string; price: string }>[] => [
       {
-        getValue: (datum) => datum.price,
-
-        elementType: "line",
+        getValue: (datum) => Number(datum.price),
         position: "right",
       },
     ],
     []
   );
 
-  if (data.length <= 0) return <div>Loading...</div>;
+  if (data.length <= 0) return <></>;
 
   return (
-    <div className="w-full h-64 sm:w-11/12">
+    <div className="w-full h-64 sm:w-full sm:flex sm:flex-auto">
       <Chart
         options={{
           data,

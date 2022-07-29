@@ -1,7 +1,16 @@
 import { dehydrate, QueryClient } from "@tanstack/react-query";
-import { ChartContent, Layout, Navigator } from "components";
+import {
+  ChartContent,
+  Filters,
+  Footer,
+  HomeHeader,
+  Layout,
+  Navigator,
+} from "components";
+import Icons from "icons";
+import Images from "images";
 import type { GetServerSideProps, NextPage } from "next";
-import Head from "next/head";
+import Image from "next/image";
 import { getCrabSales } from "services/crabSales-service";
 
 const fullFetch = {
@@ -40,18 +49,11 @@ const Home: NextPage = () => {
     <div className="py-0 sm:px-8 bg-almost-black">
       <Layout>
         <Navigator />
-        {/* <div className="hidden sm:flex">Crabada</div> */}
+        <HomeHeader />
+        <Filters />
         <ChartContent />
       </Layout>
-      <footer className="flex flex-col justify-center items-center py-6 px-6">
-        <div className="flex">
-          <h1 className="font-bold text-xl text-white mr-2">P2E Analytics</h1>
-          <h2 className="font-normal text-lg inline-flex">| Your GameFi Hub</h2>
-        </div>
-        <h1 className="font-normal text-xl flex items-end underline text-blue-700">
-          This is not financial advice
-        </h1>
-      </footer>
+      <Footer />
     </div>
   );
 };
