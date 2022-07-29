@@ -4,6 +4,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { Dropdown } from "./Dropdown";
 
+const getSocialLink = (key: string) =>
+  ({
+    twitter: "https://twitter.com/P2EAnalytics",
+    twitch: "https://www.twitch.tv/p2eanalytics",
+    discord: "https://discord.com/invite/VDkTXHNrSp",
+  }[key] || "");
+
 const getNavIcons = (key: string) =>
   ({
     search: Icons.search,
@@ -22,7 +29,9 @@ const navButton = (item: string, isSocial?: boolean) => (
     key={item}
     className={`flex flex-auto cursor-pointer ${isSocial ? "p-1" : "p-4"} `}
   >
-    <Image src={getNavIcons(item)} alt={`${item} logo`} />
+    <Link href={isSocial ? getSocialLink(item) : "/"}>
+      <Image src={getNavIcons(item)} alt={`${item} logo`} />
+    </Link>
   </div>
 );
 
