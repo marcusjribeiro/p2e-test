@@ -1,10 +1,10 @@
+import { CrabChart } from "components/CrabChart";
+import { CrabRows } from "components/CrabRows";
+import { Loading } from "components/Loading";
 import useCrabs from "hooks/useCrabs";
 import Icons from "icons";
 import Image from "next/image";
 import { thousandSeparator, usdFormatter } from "utils/util";
-import { CrabChart } from "components/CrabChart";
-import { CrabRows } from "components/CrabRows";
-import { Loading } from "components/Loading";
 
 export const ChartContent = () => {
   const { useCrabChart } = useCrabs();
@@ -37,7 +37,7 @@ export const ChartContent = () => {
             )})`}</h1>
           </div>
         </div>
-        {chartData.length <= 0 ? (
+        {chartData.length <= 0 && !isLoading ? (
           <div className="pl-4">NO DATA</div>
         ) : (
           <CrabChart data={chartData} />
